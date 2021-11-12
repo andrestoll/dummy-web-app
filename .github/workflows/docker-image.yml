@@ -10,8 +10,8 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
+    outputs:
+      image-version: ${{ steps.getversion.outputs.version }}
     steps:
     - uses: actions/checkout@v2
     - name: Read VERSION file
@@ -31,8 +31,7 @@ jobs:
 
   git-push:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
+    needs: docker
     steps:
     - name: Setup SSH
       uses: MrSquaare/ssh-setup-action@v1
@@ -44,4 +43,4 @@ jobs:
     - name: change dir
       run: cd hackday/web-app
     - name: echo
-      run: echo ${{ steps.getversion.outputs.version }}
+      run: echo ${{ needs.docker.outputs.image-version }}
