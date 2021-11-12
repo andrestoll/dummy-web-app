@@ -42,6 +42,6 @@ jobs:
     - name: Clone repository
       run: git clone git@github.com:Obiuzera/hackday.git
     - name: change dir
-      run: cd web-app
+      run: cd hackday/web-app
     - name: echo
       run: echo ${{ steps.getversion.outputs.version }}
