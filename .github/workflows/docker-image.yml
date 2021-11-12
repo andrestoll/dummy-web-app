@@ -42,5 +42,14 @@ jobs:
       run: git clone git@github.com:Obiuzera/hackday.git
     - name: change dir
       run: cd hackday/web-app
-    - name: echo
-      run: echo ${{ needs.docker.outputs.image-version }}
+    - name: patch file
+      run: |
+        cp web-app-deployment.yaml temp.yaml && \
+          kubectl patch --local -f temp.yaml \
+          -p '{"spec":{"template":{"spec":{"containers":[{"name":"web-app","image":"andrestless/dummy-web-app:${{ steps.getversion.outputs.version }}"}]}}}}' -o yaml \
+          > web-app-deployment.yaml && \
+          rm temp.yaml
+    - name: git add
+      run: git add web-app/web-app-deployment.yaml && git commit -m "Update web-app deployment image to ${{ steps.getversion.outputs.version }}"
+    - name: git push
+      run: git push
