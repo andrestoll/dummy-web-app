@@ -44,6 +44,9 @@ jobs:
       run: cd hackday/web-app
     - name: directory-list
       run: ls -lah .
+    - uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
     - name: patch file
       run: |
         cp web-app-deployment.yaml temp.yaml && \
