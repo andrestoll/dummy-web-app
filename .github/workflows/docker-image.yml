@@ -15,7 +15,7 @@ jobs:
       id: getversion
       run: echo "::set-output name=version::$(cat docker/VERSION)"
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag andrestless/dummy-web-app:latest
+      run: docker build . --file docker/Dockerfile --tag andrestless/dummy-web-app:latest
     - name: Tag with version tag
       run: docker image tag andrestless/dummy-web-app:latest andrestless/dummy-web-app:${{ steps.getversion.outputs.version }}
     - name: Log in to Docker Hub
