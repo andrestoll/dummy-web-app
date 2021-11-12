@@ -54,6 +54,9 @@ jobs:
           > web-app-deployment.yaml && \
           rm temp.yaml
     - name: git add
+      env:
+        GIT_AUTHOR_NAME: GitHub Actions
+        GIT_AUTHOR_EMAIL: github@example.org
       run: cd hackday && git add web-app/web-app-deployment.yaml && git commit -m "Update web-app deployment image to ${{ steps.getversion.outputs.version }}"
     - name: git push
       run: cd hackday && git push
